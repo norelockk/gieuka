@@ -1,7 +1,7 @@
 // Mouse controller states
 export enum MouseState {
-  UP = 1,
-  DOWN = 0,
+  UP = 0,
+  DOWN = 1,
   IDLE = 2
 }
 

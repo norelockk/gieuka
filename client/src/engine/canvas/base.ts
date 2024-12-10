@@ -5,6 +5,7 @@ import { ICanvasRenderer } from 'types';
 
 import { debugPanel } from './tools';
 import { canvasRenderers } from './components';
+import { keyboard, mouse } from '@/game';
 
 // canvas variables
 let canvas: HTMLCanvasElement | undefined = undefined;
@@ -105,4 +106,36 @@ export function setupCanvas(element: HTMLCanvasElement): void {
 
   // render on load
   requestAnimationFrame(render);
+
+  // update mouse position
+  function updateMousePosition(event: MouseEvent) {  
+    const rect: DOMRect = canvas?.getBoundingClientRect()!;
+
+    mouse.position.y = event.clientY - rect.top;
+    mouse.position.x = event.clientX - rect.left;
+  }
+  
+  // update mouse state
+  function updateMouseState(event: MouseEvent) {
+    switch (event.type) {
+      case 'mouseup':   mouse.up()  ; break;
+      case 'mousedown': mouse.down(); break;
+    }
+    updateMousePosition(event);
+    
+    console.log('state', mouse.state);
+  }
+  addEventListener('mouseup',     updateMouseState,     false);
+  addEventListener('mousedown',   updateMouseState,     false);
+  addEventListener('mousemove',   updateMousePosition,  false);
+
+  // update keyboard state
+  function updateKeyboardState(event: KeyboardEvent) {
+    switch (event.type) {
+      case 'keyup':   keyboard.up(event)  ; break;
+      case 'keydown': keyboard.down(event); break;
+    }
+  }
+  addEventListener('keyup',       updateKeyboardState,  false);
+  addEventListener('keydown',     updateKeyboardState,  false);
 }
