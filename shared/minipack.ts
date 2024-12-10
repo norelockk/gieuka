@@ -12,7 +12,7 @@ enum MinipackHeaders {
 const ENCODER_DEFAULT_ALLOCATION: number = 1028;
 const ENCODER_DEFAULT_BUFFER: Uint8Array = new Uint8Array(ENCODER_DEFAULT_ALLOCATION);
 
-class MinipackDecoder {
+export class MinipackDecoder {
   private idx: number = 0;
   private buffer: Uint8Array | undefined;
   
@@ -82,7 +82,7 @@ class MinipackDecoder {
   }
 }
 
-class MinipackEncoder {
+export class MinipackEncoder {
   private idx: number = 0;
   private buffer: Uint8Array = new Uint8Array(ENCODER_DEFAULT_ALLOCATION);
 
@@ -157,7 +157,3 @@ class MinipackEncoder {
 }
 
 export type MinipackEncodedArray = string | number | MinipackEncodedArray[];
-export class Minipack {
-  public static Encoder: MinipackEncoder = new MinipackEncoder();
-  public static Decoder: MinipackDecoder = new MinipackDecoder();
-}
