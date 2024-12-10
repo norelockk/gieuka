@@ -8,7 +8,7 @@ export class Keyboard {
   private BOTTOM!: TKeyboardCode;
 
   // State array for all keys
-  private keys: KeyboardState[] = new Array(255).fill(KeyboardState.UP);
+  keys: KeyboardState[] = new Array(255).fill(KeyboardState.UP);
 
   constructor() {
     this.setQwerty(); // Default to QWERTY layout
@@ -90,27 +90,27 @@ export class Keyboard {
     return this.keys[key] === KeyboardState.DOWN;
   }
 
-  public isLeft(): boolean {
+  get isLeft(): boolean {
     return this.isKeyActive(this.LEFT) || this.isKeyActive(KeyboardMappings.ARROW_LEFT);
   }
 
-  public isRight(): boolean {
+  get isRight(): boolean {
     return this.isKeyActive(this.RIGHT) || this.isKeyActive(KeyboardMappings.ARROW_RIGHT);
   }
 
-  public isTop(): boolean {
+  get isTop(): boolean {
     return this.isKeyActive(this.TOP) || this.isKeyActive(KeyboardMappings.ARROW_UP);
   }
 
-  public isBottom(): boolean {
+  get isBottom(): boolean {
     return this.isKeyActive(this.BOTTOM) || this.isKeyActive(KeyboardMappings.ARROW_DOWN);
   }
 
-  public isCtrl(): boolean {
+  get isCtrl(): boolean {
     return this.isKeyActive(KeyboardMappings.CTRL);
   }
 
-  public isSpace(): boolean {
+  get isSpace(): boolean {
     return this.isKeyActive(KeyboardMappings.SPACE);
   }
 }

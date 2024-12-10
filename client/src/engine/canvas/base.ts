@@ -1,7 +1,7 @@
 import { DEBUG } from 'engine/constants';
 
 import { CanvasError } from '@/exceptions';
-import { ICanvasRenderer } from 'types';
+import { ICanvasRenderer, MouseState } from 'types';
 
 import { debugPanel } from './tools';
 import { canvasRenderers } from './components';
@@ -52,26 +52,17 @@ export function setupCanvas(element: HTMLCanvasElement): void {
 
     console.log('canvas resized', canvasScale);
   }
-  
-  // resize on load
-  resize();
-  
-  // bind resize to body
-  document.body.onresize = resize;
-
-  // enable debug panels
-  if (DEBUG && debugPanel)
-    document.body.append(debugPanel.dom);
 
   // render canvas
   function render(): void {
     debugPanel && debugPanel.begin();
 
-    // canvas renderers with priority
-    const renderers: ICanvasRenderer[] = Array.from(canvasRenderers.values()).sort((a, b) => a.priority - b.priority);
+    const now = performance.now();
+
+    // update mouse state
+    mouse.update(now);
 
     // calculate delta time
-    const now = performance.now();
     canvasDelta = (now - lastCanvasDelta) / 1000;
     lastCanvasDelta = now;
     
@@ -84,7 +75,8 @@ export function setupCanvas(element: HTMLCanvasElement): void {
       canvasContext!.fillRect(0, 0, canvasWidth, canvasHeight);
     canvasContext!.restore();
 
-    // render renderers
+    // handling renderers
+    const renderers: ICanvasRenderer[] = Array.from(canvasRenderers.values()).sort((a, b) => a.priority - b.priority);
     canvasContext!.save();
       for (const renderer of renderers) {
         if (!renderer.visible)
@@ -104,9 +96,6 @@ export function setupCanvas(element: HTMLCanvasElement): void {
     requestAnimationFrame(render);
   }
 
-  // render on load
-  requestAnimationFrame(render);
-
   // update mouse position
   function updateMousePosition(event: MouseEvent) {  
     const rect: DOMRect = canvas?.getBoundingClientRect()!;
@@ -122,12 +111,11 @@ export function setupCanvas(element: HTMLCanvasElement): void {
       case 'mousedown': mouse.down(); break;
     }
     updateMousePosition(event);
-    
-    console.log('state', mouse.state);
   }
   addEventListener('mouseup',     updateMouseState,     false);
   addEventListener('mousedown',   updateMouseState,     false);
   addEventListener('mousemove',   updateMousePosition,  false);
+  addEventListener('mouseleave',  () => mouse.idle(),   false);
 
   // update keyboard state
   function updateKeyboardState(event: KeyboardEvent) {
@@ -138,4 +126,24 @@ export function setupCanvas(element: HTMLCanvasElement): void {
   }
   addEventListener('keyup',       updateKeyboardState,  false);
   addEventListener('keydown',     updateKeyboardState,  false);
+
+  // enable debug panels
+  if (DEBUG && debugPanel)
+    document.body.append(debugPanel.dom);
+
+  // no context menu on non-debug mode
+  canvas.oncontextmenu = (e: Event) => DEBUG || e.preventDefault();
+  
+  // bind resize to body
+  document.body.onresize = resize;
+
+  // mouse position reset
+  mouse.position.x = canvasCenterWidth;
+  mouse.position.y = canvasCenterHeight;
+  
+  // resize on load
+  resize();
+
+  // render on load
+  requestAnimationFrame(render);
 }
