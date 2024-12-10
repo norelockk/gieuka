@@ -4,7 +4,9 @@
     "baseUrl": "./", // Base directory for resolving non-relative module names
     "paths": {
       "@/*": ["src/*"],
+      "types/*": ["types/*"],
       "engine/*": ["src/engine/*"],
+      "shared/*": ["../shared/*"],
     },
 
     /* Projects */

@@ -1,5 +1,5 @@
 import { CanvasRenderer } from "./renderer";
-import { TEasingFunction } from "@/types";
+import { TEasingFunction } from "types";
 import { TransitionError } from "@/exceptions";
 
 export class Transition extends CanvasRenderer {

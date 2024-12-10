@@ -1,6 +1,6 @@
 import { Vector } from 'engine/utils';
 
-import { MouseState } from '@/types';
+import { MouseState } from 'types';
 
 export class Mouse {
   public angle: number = 0;

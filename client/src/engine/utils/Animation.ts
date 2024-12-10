@@ -1,4 +1,4 @@
-import { TEasingFunction } from '@/types';
+import { TEasingFunction } from 'types';
 import { canvasDelta as delta } from 'engine/canvas';
 
 export class LinearAnimation {

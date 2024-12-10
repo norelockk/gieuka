@@ -1,4 +1,4 @@
-import { ElementorPrintMethod, IElementorBuildConfig, TElementorData } from '@/types';
+import { ElementorPrintMethod, IElementorBuildConfig, TElementorData } from 'types';
 
 const VALUE_STATEMENT_OPEN: string = '{{';
 const VALUE_PATTERN_STRING: string = '{{(.+?)}}';

@@ -16,7 +16,9 @@ module.exports = {
         extensions: ['.ts', '.js'],
         alias: {
             '@': path.resolve(__dirname, 'src'),
+            'types': path.resolve(__dirname, 'types'),
             'engine': path.resolve(__dirname, 'src', 'engine'),
+            'shared': path.resolve(__dirname, '..', 'shared'),
         },
     },
     module: {

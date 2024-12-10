@@ -1,7 +1,7 @@
 import { DEBUG } from 'engine/constants';
 
 import { CanvasError } from '@/exceptions';
-import { ICanvasRenderer } from '@/types';
+import { ICanvasRenderer } from 'types';
 
 import { debugPanel } from './tools';
 import { canvasRenderers } from './components';

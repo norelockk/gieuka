@@ -4,7 +4,7 @@
 // so we can create a list of functions to draw, and we can sort them by priority
 // so we can draw the canvas in the order of the list
 
-import { ICanvasRenderer } from '@/types';
+import { ICanvasRenderer } from 'types';
 import { CanvasRendererError } from '@/exceptions';
 
 export const canvasRenderers: Map<string, ICanvasRenderer> = new Map();
