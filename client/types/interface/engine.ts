@@ -4,11 +4,14 @@ import { ElementorPrintMethod } from '../enum';
 // Engine interfaces
 // Canvas renderer
 export interface ICanvasRenderer {
+  loaded: boolean;
   visible: boolean;
   priority: number;
 
   render: () => void;
-  initialize?: () => void;
+  update?: () => void;
+  destroy?: () => void;
+  initialize?: (() => void) | undefined;
 }
 
 // Elementor

@@ -27,7 +27,7 @@ export class CircleAnimation extends Transition {
     duration: number,
     easingFunction: (t: number) => number = (t) => t
   ) {
-    super(0, duration, easingFunction);
+    super(duration, easingFunction);
 
     this._x = options.x;
     this._y = options.y;

@@ -11,9 +11,9 @@ export class DebugPreview extends CanvasRenderer {
     'keyboard': null,
   };
 
-  initialize(): void {
-    this.setVisible(true);
-  }
+  // initialize(): void {
+  //   this.setVisible(true);
+  // }
 
   render(): void {
     // draw debug preview

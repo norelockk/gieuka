@@ -19,6 +19,7 @@ module.exports = {
             'types': path.resolve(__dirname, 'types'),
             'engine': path.resolve(__dirname, 'src', 'engine'),
             'shared': path.resolve(__dirname, '..', 'shared'),
+            'exceptions': path.resolve(__dirname, 'exceptions'),
         },
     },
     module: {

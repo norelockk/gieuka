@@ -5,52 +5,53 @@
 // so we can draw the canvas in the order of the list
 
 import { ICanvasRenderer } from 'types';
-import { CanvasRendererError } from '@/exceptions';
+
+import { CanvasRendererError } from 'exceptions';
 
 export const canvasRenderers: Map<string, ICanvasRenderer> = new Map();
 
 export class CanvasRenderer implements ICanvasRenderer {
-  private readonly _now: number = Date.now();
-  private readonly _hash: string = Math.random().toString(36).substring(2);
-  private readonly _name: string = `${this.constructor.name}.${this._hash}.${this._now}`;
+  [x: string]: any;
 
+  private readonly _id: string = `${Math.random().toString(36).substring(2)}.${Date.now()}`;
+  
+  public loaded: boolean = false;
   public visible: boolean = false;
-  public priority: number;
-  public rendererName: string = this._name;
+  public priority: number = 0;
 
-  constructor(priority: number = 0) {
-    if (canvasRenderers.has(this.rendererName))
-      throw new CanvasRendererError(`${this.constructor.name} renderer already exists`);
+  constructor() {
+    if (canvasRenderers.has(this._id))
+      return;
 
-    this.priority = priority;
-    canvasRenderers.set(this.rendererName, this);
+    canvasRenderers.set(this._id, this);
 
     try {
-      this.initialize();
+      if (this.initialize)
+        this.initialize();
+      else
+        console.warn(`${this.constructor.name}.initialize() not implemented`);
     } catch (error: any) {
       throw new CanvasRendererError(`${this.constructor.name}.initialize() failed: ${error.message}`);
     }
+
+    this.loaded = true;
+  }
+
+  public setVisible(visible: boolean): void {
+    this.visible = visible;
+    canvasRenderers.get(this._id)!.visible = visible;
+  }
+
+  public setPriority(priority: number): void {
+    this.priority = priority;
+    canvasRenderers.get(this._id)!.priority = priority;
   }
 
   render(): void {
     throw new CanvasRendererError(`${this.constructor.name}.render() not implemented`);
   }
 
-  initialize(): void {
-    console.warn(`${this.constructor.name}.initialize() not implemented, skipping initialization`);
-  }
-
-  public destroy(): void {
-    canvasRenderers.delete(this.rendererName);
-  }
-
-  public setVisible(visible: boolean): void {
-    this.visible = visible;
-    canvasRenderers.get(this.rendererName)!.visible = visible;
-  }
-
-  public setPriority(priority: number): void {
-    this.priority = priority;
-    canvasRenderers.get(this.rendererName)!.priority = priority;
+  destroy(): void {
+    canvasRenderers.delete(this._id);
   }
 }

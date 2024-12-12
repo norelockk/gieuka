@@ -1,4 +1,5 @@
 import { DEBUG } from 'engine/constants';
+import { CanvasToolError } from 'exceptions/engine';
 
 class Panel {
   public dom: HTMLCanvasElement;
@@ -28,9 +29,9 @@ class Panel {
     this.dom.style.cssText = 'width:80px;height:48px';
 
     const context = this.dom.getContext('2d');
-    if (!context) {
-      throw new Error('Unable to get canvas context.');
-    }
+    if (!context)
+      throw new CanvasToolError('unable to get canvas context');
+
     this.context = context;
 
     this.context.font = `bold ${9 * PR}px monospace`;

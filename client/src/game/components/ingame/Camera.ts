@@ -1,12 +1,12 @@
 import { canvasCenterHeight, canvasCenterWidth, Ease2d, easeOutQuad, canvasDelta as delta } from '@/engine';
 
 export class Camera extends Ease2d {
-  private delay: number = 0;
-  private forcedDelay: number = 0;
+  private _delay: number = 0;
+  private _forcedDelay: number = 0;
 
   public update(): void {
-    if (this.forcedDelay > 0) {
-      this.forcedDelay -= delta;
+    if (this._forcedDelay > 0) {
+      this._forcedDelay -= delta;
       return;
     }
 

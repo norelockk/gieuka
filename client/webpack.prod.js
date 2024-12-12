@@ -1,8 +1,7 @@
 const { merge } = require('webpack-merge');
-const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common.js');
 
-const reactDomProps = require('react-dom-props')
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = merge(common, {
     mode: 'production',
@@ -21,8 +20,10 @@ module.exports = merge(common, {
                     },
                     compress: {
                         join_vars: false,
-                        drop_console: true,
-                        unsafe_methods: true,
+                        hoist_vars: false,
+                        reduce_vars: false,
+                        collapse_vars: false,
+                        drop_console: false,
                     },
                     format: {
                         comments: false,

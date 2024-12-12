@@ -16,13 +16,13 @@ export class LoadingRenderer extends CanvasRenderer {
     this.setVisible(true);
   }
 
-  render(): void {
+  update(): void {
     this.loadingRotation += canvasDelta * 10;
 
     if (this.loadingWidth < 1 && !this.loadingFilled) {
       this.loadingWidth += canvasDelta * 0.55;
 
-      if (this.loadingWidth >= 1)
+      if (this.loadingWidth > 1)
         this.loadingFilled = true;
     } else {
       this.loadingWidth -= canvasDelta * 0.75;
@@ -30,6 +30,9 @@ export class LoadingRenderer extends CanvasRenderer {
       if (this.loadingWidth <= 0.02)
         this.loadingFilled = false;
     }
+  }
+
+  render(): void {
 
     const startAngle = 0;
     const endAngle = startAngle + Math.PI * this.loadingWidth;
